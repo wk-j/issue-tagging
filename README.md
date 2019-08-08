@@ -1,6 +1,6 @@
-##Train Isuues
-
+## Issue Tagging
 
 ```bash
-issues-tagging
+dotnet build src/IssueML/issuesML.csproj
+dotnet run --project src/IssueML/issuesML.csproj
 ```

@@ -7,9 +7,9 @@ namespace issuesML
     class Program
     {
         private static string _appPath => Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
-        private static string _trainDataPath => Path.Combine(_appPath,"Data","issues_train.tsv");
-        private static string _testDataPath => Path.Combine(_appPath,"Data", "issues_test.tsv");
-        private static string _modelPath => Path.Combine("Models", "model.zip");
+        private static string _trainDataPath => Path.Combine(_appPath, "Data", "issues_train.tsv");
+        private static string _testDataPath => Path.Combine(_appPath, "Data", "issues_test.tsv");
+        private static string _modelPath => Path.Combine(_appPath, "Models", "model.zip");
 
         private static MLContext _mlContext;
         private static PredictionEngine<GitHubIssue, IssuePrediction> _predEngine;
@@ -25,7 +25,7 @@ namespace issuesML
             Console.WriteLine(_modelPath);
             PredictIssue();
         }
-        
+
         public static IEstimator<ITransformer> ProcessData()
         {
             var pipeline = _mlContext.Transforms.Conversion.MapValueToKey(inputColumnName: "Area", outputColumnName: "Label").Append(_mlContext.Transforms.Text.FeaturizeText(inputColumnName: "Title", outputColumnName: "TitleFeaturized"))
@@ -40,7 +40,8 @@ namespace issuesML
             _trainedModel = trainingPipeline.Fit(trainingDataView);
             _predEngine = _mlContext.Model.CreatePredictionEngine<GitHubIssue, IssuePrediction>(_trainedModel);
 
-            GitHubIssue issue = new GitHubIssue() {
+            GitHubIssue issue = new GitHubIssue()
+            {
                 Title = "WebSockets communication is slow in my machine",
                 Description = "The WebSockets communication used under the covers by SignalR looks like is going slow in my development machine.."
             };
@@ -50,8 +51,8 @@ namespace issuesML
         }
         public static void Evaluate(DataViewSchema trainingDataViewSchema)
         {
-            
-            var testDataView = _mlContext.Data.LoadFromTextFile<GitHubIssue>(_testDataPath,hasHeader: true);
+
+            var testDataView = _mlContext.Data.LoadFromTextFile<GitHubIssue>(_testDataPath, hasHeader: true);
             var testMetrics = _mlContext.MulticlassClassification.Evaluate(_trainedModel.Transform(testDataView));
             Console.WriteLine($"*************************************************************************************************************");
             Console.WriteLine($"*       Metrics for Multi-class Classification model - Test Data     ");
@@ -63,7 +64,7 @@ namespace issuesML
             Console.WriteLine($"*************************************************************************************************************");
             SaveModelAsFile(_mlContext, trainingDataViewSchema, _trainedModel);
         }
-        private static void SaveModelAsFile(MLContext mlContext,DataViewSchema trainingDataViewSchema, ITransformer model)
+        private static void SaveModelAsFile(MLContext mlContext, DataViewSchema trainingDataViewSchema, ITransformer model)
         {
             mlContext.Model.Save(model, trainingDataViewSchema, _modelPath);
             PredictIssue();
@@ -77,7 +78,7 @@ namespace issuesML
             Console.WriteLine($"=============== Single Prediction - Result: {prediction.Area} ===============");
 
         }
-        
+
     }
 }
 
