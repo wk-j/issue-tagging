@@ -33,7 +33,6 @@ namespace IssueML
                 .Append(_mlContext.Transforms.Concatenate("Features", "TitleFeaturized", "DescriptionFeaturized")).AppendCacheCheckpoint(_mlContext);
 
             return pipeline;
-
         }
         public static IEstimator<ITransformer> BuildAndTrainModel(IDataView trainingDataView, IEstimator<ITransformer> pipeline)
         {
