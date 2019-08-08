@@ -17,7 +17,7 @@ jobs:
     - run:
         name: Build and publish
         command: |
-          ~/.dotnet/tools/dotnet-cake -target=Publish
+          ~/.dotnet/tools/dotnet-cake -target=Publish -vv="0.1.${CIRCLE_BUILD_NUM}"
     - save_cache:
         paths:
         - ~/.m2
@@ -39,7 +39,7 @@ jobs:
 
       - run: |
           image="issue-tagging"
-          version="0.1.0"
+          version="0.1.${CIRCLE_BUILD_NUM}"
           docker login -u wearetherock -p "${DOCKER_PASSWORD}"
           docker build -t ${image}:latest .
           docker tag  ${image}:latest wearetherock/${image}:${version}
