@@ -10,7 +10,7 @@ jobs:
     - checkout
 
     - restore_cache:
-        key: app-{{ checksum "src/IssueML/IssuesML.csproj" }}
+        key: app-{{ checksum "src/IssueML/IssueML.csproj" }}
 
     - run: |
         dotnet tool install -g cake.tool
@@ -21,7 +21,7 @@ jobs:
     - save_cache:
         paths:
         - ~/.m2
-        key: app-{{ checksum "src/IssueML/IssuesML.csproj" }}
+        key: app-{{ checksum "src/IssueML/IssueML.csproj" }}
 
     - persist_to_workspace:
           root: .

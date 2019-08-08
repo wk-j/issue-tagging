@@ -1,5 +1,5 @@
 using Microsoft.ML.Data;
-namespace issuesML{
+namespace IssueML{
     public class IssuePrediction
     {
         [ColumnName("PredictedLabel")]
