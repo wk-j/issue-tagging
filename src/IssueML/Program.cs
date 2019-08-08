@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using Microsoft.ML;
-namespace issuesML
+namespace IssueML
 {
     class Program
     {
