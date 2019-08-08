@@ -28,15 +28,21 @@ namespace issuesML
 
         public static IEstimator<ITransformer> ProcessData()
         {
-            var pipeline = _mlContext.Transforms.Conversion.MapValueToKey(inputColumnName: "Area", outputColumnName: "Label").Append(_mlContext.Transforms.Text.FeaturizeText(inputColumnName: "Title", outputColumnName: "TitleFeaturized"))
-                            .Append(_mlContext.Transforms.Text.FeaturizeText(inputColumnName: "Description", outputColumnName: "DescriptionFeaturized")).Append(_mlContext.Transforms.Concatenate("Features", "TitleFeaturized", "DescriptionFeaturized")).AppendCacheCheckpoint(_mlContext);
+            var pipeline = _mlContext.Transforms.Conversion
+                .MapValueToKey(inputColumnName: "Area", outputColumnName: "Label")
+                .Append(_mlContext.Transforms.Text.FeaturizeText(inputColumnName: "Title", outputColumnName: "TitleFeaturized"))
+                .Append(_mlContext.Transforms.Text.FeaturizeText(inputColumnName: "Description", outputColumnName: "DescriptionFeaturized"))
+                .Append(_mlContext.Transforms.Concatenate("Features", "TitleFeaturized", "DescriptionFeaturized")).AppendCacheCheckpoint(_mlContext);
+
             return pipeline;
 
         }
         public static IEstimator<ITransformer> BuildAndTrainModel(IDataView trainingDataView, IEstimator<ITransformer> pipeline)
         {
-            var trainingPipeline = pipeline.Append(_mlContext.MulticlassClassification.Trainers.SdcaMaximumEntropy("Label", "Features"))
-                                    .Append(_mlContext.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
+            var trainingPipeline = pipeline
+                .Append(_mlContext.MulticlassClassification.Trainers.SdcaMaximumEntropy("Label", "Features"))
+                .Append(_mlContext.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
+
             _trainedModel = trainingPipeline.Fit(trainingDataView);
             _predEngine = _mlContext.Model.CreatePredictionEngine<GitHubIssue, IssuePrediction>(_trainedModel);
 
@@ -78,7 +84,5 @@ namespace issuesML
             Console.WriteLine($"=============== Single Prediction - Result: {prediction.Area} ===============");
 
         }
-
     }
 }
-
