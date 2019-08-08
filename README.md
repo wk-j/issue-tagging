@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/i-bcircle/issue-tagging.svg?style=svg)](https://circleci.com/gh/i-bcircle/issue-tagging)
 [![CodeFactor](https://www.codefactor.io/repository/github/i-bcircle/issue-tagging/badge)](https://www.codefactor.io/repository/github/i-bcircle/issue-tagging)
+![GitHub language count](https://img.shields.io/github/languages/count/i-bcircle/issue-tagging)
+![GitHub top language](https://img.shields.io/github/languages/top/i-bcircle/issue-tagging)
 [![](https://images.microbadger.com/badges/image/wearetherock/issue-tagging.svg)](https://microbadger.com/images/wearetherock/issue-tagging "Get your own image badge on microbadger.com")
 [![](https://images.microbadger.com/badges/version/wearetherock/issue-tagging.svg)](https://microbadger.com/images/wearetherock/issue-tagging "Get your own version badge on microbadger.com")
 
