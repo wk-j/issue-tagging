@@ -10,7 +10,6 @@ namespace IssueML
         private static string _trainDataPath => Path.Combine(_appPath, "Data", "issues_train.tsv");
         private static string _testDataPath => Path.Combine(_appPath, "Data", "issues_test.tsv");
         private static string _modelPath => Path.Combine(_appPath, "Models", "model.zip");
-
         private static MLContext _mlContext;
         private static PredictionEngine<GitHubIssue, IssuePrediction> _predEngine;
         private static ITransformer _trainedModel;
@@ -25,7 +24,6 @@ namespace IssueML
             Console.WriteLine(_modelPath);
             PredictIssue();
         }
-
         public static IEstimator<ITransformer> ProcessData()
         {
             var pipeline = _mlContext.Transforms.Conversion
@@ -57,7 +55,6 @@ namespace IssueML
         }
         public static void Evaluate(DataViewSchema trainingDataViewSchema)
         {
-
             var testDataView = _mlContext.Data.LoadFromTextFile<GitHubIssue>(_testDataPath, hasHeader: true);
             var testMetrics = _mlContext.MulticlassClassification.Evaluate(_trainedModel.Transform(testDataView));
             Console.WriteLine($"*************************************************************************************************************");
@@ -82,7 +79,6 @@ namespace IssueML
             _predEngine = _mlContext.Model.CreatePredictionEngine<GitHubIssue, IssuePrediction>(loadedModel);
             var prediction = _predEngine.Predict(singleIssue);
             Console.WriteLine($"=============== Single Prediction - Result: {prediction.Area} ===============");
-
         }
     }
 }
