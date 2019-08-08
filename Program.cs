@@ -18,10 +18,10 @@ namespace issuesML
         static void Main(string[] args)
         {
             _mlContext = new MLContext(seed: 0);
-            // _trainingDataView = _mlContext.Data.LoadFromTextFile<GitHubIssue>(_trainDataPath, hasHeader: true);
-            // var pipeline = ProcessData();
-            // var trainingPipeline = BuildAndTrainModel(_trainingDataView, pipeline);
-            // Evaluate(_trainingDataView.Schema);
+            _trainingDataView = _mlContext.Data.LoadFromTextFile<GitHubIssue>(_trainDataPath, hasHeader: true);
+            var pipeline = ProcessData();
+            var trainingPipeline = BuildAndTrainModel(_trainingDataView, pipeline);
+            Evaluate(_trainingDataView.Schema);
             Console.WriteLine(_modelPath);
             PredictIssue();
         }
